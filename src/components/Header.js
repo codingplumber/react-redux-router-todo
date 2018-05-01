@@ -12,8 +12,6 @@ const styles = {
     }
 }
 
-const header = () => {
-    return <div style={styles.headerWrapper}>To-Do</div>
-}
+const header = () => <div style={styles.headerWrapper}>To-Do List</div>
 
 export default header;

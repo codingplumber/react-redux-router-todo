@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import Header from './components/Header';
@@ -13,30 +12,22 @@ const styles = {
   }
 }
 
-class App extends Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <div>
-          <Header />
-          <div style={styles.bodyWrapper}>
-            <ToDoList />
-            
-              <Switch>
-                <Route path='/:listId' component={Form} />
-                <Redirect from='/' to='/1' />
-              </Switch>           
-          </div>
+const app = () => {
+  return (
+    <BrowserRouter>
+      <div>
+        <Header />
+        <div style={styles.bodyWrapper}>
+          <ToDoList />
+          
+          <Switch>
+            <Route path='/:listId' component={Form} />
+            <Redirect from='/' to='/1' />
+          </Switch>           
         </div>
-      </BrowserRouter>
-    );
-  }
+      </div>
+    </BrowserRouter>
+  );
 }
 
-const mapStateToProps = state => {
-  return {
-    // boogers: state.booger
-  }
-};
-
-export default connect(mapStateToProps, null)(App);
+export default app;
