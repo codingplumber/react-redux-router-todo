@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './components/Header';
 import ToDoList from './components/ToDoList';
@@ -12,7 +12,7 @@ const styles = {
   }
 }
 
-const app = () => {
+const app = () => {    
   return (
     <BrowserRouter>
       <div>
@@ -29,5 +29,5 @@ const app = () => {
     </BrowserRouter>
   );
 }
-
+ 
 export default app;

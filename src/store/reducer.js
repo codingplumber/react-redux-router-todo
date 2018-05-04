@@ -17,7 +17,8 @@ const initialState = {
         }
     ],
     title: '',
-    task: ''
+    task: '',
+    redirectTo: null
 }
 
 const reducer = (state = initialState, action) => {
@@ -27,9 +28,10 @@ const reducer = (state = initialState, action) => {
             const listItem = state.list.filter(item => item.id === parseInt(action.id, 10));
             return {
                 ...state,
-                id: listItem[0].id,
-                title: listItem[0].title,
-                task: listItem[0].task
+                // had to add these ternarys when I added redirectTo
+                id: listItem[0] ? listItem[0].id : '',
+                title: listItem[0] ? listItem[0].title : '',
+                task: listItem[0] ? listItem[0].task : ''
             }
         
         // captures values in input and textarea to store in state
@@ -58,17 +60,29 @@ const reducer = (state = initialState, action) => {
             const newList = state.list.filter(item => item.id !== parseInt(action.id, 10));
             return {
                 ...state,
-                list: newList
+                list: newList,
+                title: newList[0] ? newList[0].title : '',
+                task: newList[0] ? newList[0].task : '',
+                redirectTo: newList.length > 0 ? `/${newList[0].id}` : '/1'
             }
 
         // adds new to-do item to list in state
         case 'ADD':
-            const id = state.list[state.list.length - 1].id + 1,
-                newToDo = {id: id, title: state.title, task: state.task};
+            let id;
+            state.list.length > 0 ? id = state.list[state.list.length - 1].id + 1 : id = 1;
+            const newToDo = {id: id, title: state.title, task: state.task};
             return {
                 ...state,
                 list: state.list.concat(newToDo)
             }
+
+        // case 'REDIRECT':
+        //     console.log('here')
+        //     return {
+        //         ...state,
+        //         // redirectTo: null
+        //     }
+
         default: 
             return state
     }

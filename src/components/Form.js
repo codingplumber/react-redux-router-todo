@@ -29,6 +29,13 @@ class Form extends Component {
         }
     }
 
+    // redirects route after deleting a list item
+    componentDidUpdate(prevProps) {
+        if (this.props.redirectTo !== prevProps.redirectTo) {
+            this.props.history.push(this.props.redirectTo)
+        }
+    }
+
     // stops form from reloading
     submit(e) {
         e.preventDefault();
@@ -45,7 +52,7 @@ class Form extends Component {
         return (
             <form style={styles.formWrapper} onSubmit={this.submit}>
                 <div style={styles.innerForm}>
-                    <div>List ID: {listId}</div>
+
                     <div>
                         <label>Title: <input 
                             type='text'
@@ -62,9 +69,9 @@ class Form extends Component {
                             onChange={(e) => onInputChange(e.target.name, e.target.value)} /></label>           
                     </div>
                     <div>
-                        <input type='submit' value='Update' onClick={() => onUpdate(listId)} />
-                        <input type='submit' value='Delete' onClick={() => onDelete(listId)} />
-                        <input type='submit' value='Add' onClick={onAdd} />
+                        <input type='button' value='Update' onClick={() => onUpdate(listId)} />
+                        <input type='button' value='Delete' onClick={() => onDelete(listId)} />
+                        <input type='button' value='Add' onClick={onAdd} />
                     </div>            
                 </div>
             </form>
@@ -77,7 +84,8 @@ const mapStateToProps = state => {
     return {
         items: state.list,
         title: state.title,
-        task: state.task
+        task: state.task,
+        redirectTo: state.redirectTo
     }
 };
 
@@ -87,7 +95,8 @@ const mapDispatchToProps = dispatch => {
         onInputChange: (name, value) => dispatch({type: 'CAPTURE_INPUT', payload: {name, value}}),
         onUpdate: (id) => dispatch({type: 'UPDATE', id}),
         onDelete: (id) => dispatch({type: 'DELETE', id}),
-        onAdd: () => dispatch({type: 'ADD'})
+        onAdd: () => dispatch({type: 'ADD'}),
+        // onRedirect: () => dispatch({type: 'REDIRECT'})
     }
 };
 
